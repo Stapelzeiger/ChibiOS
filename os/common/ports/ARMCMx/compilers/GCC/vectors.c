@@ -66,6 +66,8 @@ typedef struct {
   irq_vector_t  vectors[CORTEX_NUM_VECTORS];
 } vectors_t;
 
+
+void chSysHalt(const char *reason);
 /**
  * @brief   Unhandled exceptions handler.
  * @details Any undefined exception vector points to this function by default.
@@ -74,7 +76,7 @@ typedef struct {
  * @notapi
  */
 void _unhandled_exception(void) {
-
+  chSysHalt("unhandled exception");
   while (true)
     ;
 }
