@@ -127,6 +127,13 @@ SECTIONS
         . = ALIGN(4);
         PROVIDE(_bss_end = .);
     } > ram    
+
+    .noinit ALIGN(4) (NOLOAD) : ALIGN(4)
+    {
+        . = ALIGN(4);
+        *(.noinit)
+        *(.noinit.*)
+    } > ram
 }
 
 PROVIDE(end = .);
