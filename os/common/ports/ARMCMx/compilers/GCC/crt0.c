@@ -213,6 +213,15 @@ extern funcp_t __fini_array_end;
  */
 extern void main(void);
 
+
+/*
+ * used to jump to ROM bootloader before any initialization
+ */
+#if !defined(__DOXYGEN__)
+__attribute__((weak))
+#endif
+void __very_early_init(void);
+
 /**
  * @brief   Early initialization.
  * @details This hook is invoked immediately after the stack initialization
@@ -258,6 +267,7 @@ void _default_exit(void) {
 __attribute__((naked))
 #endif
 void Reset_Handler(void) {
+  __very_early_init();
   uint32_t psp, reg;
 
   /* Process Stack initialization, it is allocated starting from the
