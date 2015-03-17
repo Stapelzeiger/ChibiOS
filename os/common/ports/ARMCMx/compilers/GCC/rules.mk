@@ -274,10 +274,10 @@ endif
 
 %.list: %.elf $(LDSCRIPT)
 ifeq ($(USE_VERBOSE_COMPILE),yes)
-	$(OD) -S $< > $@
+	$(OD) -d $< > $@
 else
 	@$(COLOR_PRINTF) "Creating $@"
-	@$(OD) -S $< > $@
+	@$(OD) -d $< > $@
 	@echo
 	@$(COLOR_PRINTF) "Done"
 endif
