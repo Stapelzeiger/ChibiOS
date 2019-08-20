@@ -91,6 +91,46 @@ PWMDriver PWMD9;
 #endif
 
 /**
+ * @brief   PWMD10 driver identifier.
+ * @note    The driver PWMD10 allocates the timer TIM10 when enabled.
+ */
+#if STM32_PWM_USE_TIM10 || defined(__DOXYGEN__)
+PWMDriver PWMD10;
+#endif
+
+/**
+ * @brief   PWMD11 driver identifier.
+ * @note    The driver PWMD11 allocates the timer TIM11 when enabled.
+ */
+#if STM32_PWM_USE_TIM11 || defined(__DOXYGEN__)
+PWMDriver PWMD11;
+#endif
+
+/**
+ * @brief   PWMD12 driver identifier.
+ * @note    The driver PWMD12 allocates the timer TIM12 when enabled.
+ */
+#if STM32_PWM_USE_TIM12 || defined(__DOXYGEN__)
+PWMDriver PWMD12;
+#endif
+
+/**
+ * @brief   PWMD13 driver identifier.
+ * @note    The driver PWMD13 allocates the timer TIM13 when enabled.
+ */
+#if STM32_PWM_USE_TIM13 || defined(__DOXYGEN__)
+PWMDriver PWMD13;
+#endif
+
+/**
+ * @brief   PWMD14 driver identifier.
+ * @note    The driver PWMD14 allocates the timer TIM14 when enabled.
+ */
+#if STM32_PWM_USE_TIM14 || defined(__DOXYGEN__)
+PWMDriver PWMD14;
+#endif
+
+/**
  * @brief   PWMD15 driver identifier.
  * @note    The driver PWMD15 allocates the timer TIM15 when enabled.
  */
@@ -397,6 +437,41 @@ void pwm_lld_init(void) {
   PWMD9.tim = STM32_TIM9;
 #endif
 
+#if STM32_PWM_USE_TIM10
+  /* Driver initialization.*/
+  pwmObjectInit(&PWMD10);
+  PWMD10.channels = STM32_TIM10_CHANNELS;
+  PWMD10.tim = STM32_TIM10;
+#endif
+
+#if STM32_PWM_USE_TIM11
+  /* Driver initialization.*/
+  pwmObjectInit(&PWMD11);
+  PWMD11.channels = STM32_TIM11_CHANNELS;
+  PWMD11.tim = STM32_TIM11;
+#endif
+
+#if STM32_PWM_USE_TIM12
+  /* Driver initialization.*/
+  pwmObjectInit(&PWMD12);
+  PWMD12.channels = STM32_TIM12_CHANNELS;
+  PWMD12.tim = STM32_TIM12;
+#endif
+
+#if STM32_PWM_USE_TIM13
+  /* Driver initialization.*/
+  pwmObjectInit(&PWMD13);
+  PWMD13.channels = STM32_TIM13_CHANNELS;
+  PWMD13.tim = STM32_TIM13;
+#endif
+
+#if STM32_PWM_USE_TIM14
+  /* Driver initialization.*/
+  pwmObjectInit(&PWMD14);
+  PWMD14.channels = STM32_TIM14_CHANNELS;
+  PWMD14.tim = STM32_TIM14;
+#endif
+
 #if STM32_PWM_USE_TIM15
   /* Driver initialization.*/
   pwmObjectInit(&PWMD15);
@@ -537,6 +612,66 @@ void pwm_lld_start(PWMDriver *pwmp) {
       pwmp->clock = STM32_TIM9CLK;
 #else
       pwmp->clock = STM32_TIMCLK2;
+#endif
+    }
+#endif
+
+#if STM32_PWM_USE_TIM10
+    if (&PWMD10 == pwmp) {
+      rccEnableTIM10(true);
+      rccResetTIM10();
+#if defined(STM32_TIM10CLK)
+      pwmp->clock = STM32_TIM10CLK;
+#else
+      pwmp->clock = STM32_TIMCLK2;
+#endif
+    }
+#endif
+
+#if STM32_PWM_USE_TIM11
+    if (&PWMD11 == pwmp) {
+      rccEnableTIM11(true);
+      rccResetTIM11();
+#if defined(STM32_TIM11CLK)
+      pwmp->clock = STM32_TIM11CLK;
+#else
+      pwmp->clock = STM32_TIMCLK2;
+#endif
+    }
+#endif
+
+#if STM32_PWM_USE_TIM12
+    if (&PWMD12 == pwmp) {
+      rccEnableTIM12(true);
+      rccResetTIM12();
+#if defined(STM32_TIM12CLK)
+      pwmp->clock = STM32_TIM12CLK;
+#else
+      pwmp->clock = STM32_TIMCLK1;
+#endif
+    }
+#endif
+
+#if STM32_PWM_USE_TIM13
+    if (&PWMD13 == pwmp) {
+      rccEnableTIM13(true);
+      rccResetTIM13();
+#if defined(STM32_TIM13CLK)
+      pwmp->clock = STM32_TIM13CLK;
+#else
+      pwmp->clock = STM32_TIMCLK1;
+#endif
+    }
+#endif
+
+#if STM32_PWM_USE_TIM14
+    if (&PWMD14 == pwmp) {
+      rccEnableTIM14(true);
+      rccResetTIM14();
+#if defined(STM32_TIM14CLK)
+      pwmp->clock = STM32_TIM14CLK;
+#else
+      pwmp->clock = STM32_TIMCLK1;
 #endif
     }
 #endif
@@ -795,6 +930,36 @@ void pwm_lld_stop(PWMDriver *pwmp) {
       nvicDisableVector(STM32_TIM9_NUMBER);
 #endif
       rccDisableTIM9();
+    }
+#endif
+
+#if STM32_PWM_USE_TIM10
+    if (&PWMD10 == pwmp) {
+      rccDisableTIM10();
+    }
+#endif
+
+#if STM32_PWM_USE_TIM11
+    if (&PWMD11 == pwmp) {
+      rccDisableTIM11();
+    }
+#endif
+
+#if STM32_PWM_USE_TIM12
+    if (&PWMD12 == pwmp) {
+      rccDisableTIM12();
+    }
+#endif
+
+#if STM32_PWM_USE_TIM13
+    if (&PWMD13 == pwmp) {
+      rccDisableTIM13();
+    }
+#endif
+
+#if STM32_PWM_USE_TIM14
+    if (&PWMD14 == pwmp) {
+      rccDisableTIM14();
     }
 #endif
 
